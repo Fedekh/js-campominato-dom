@@ -48,7 +48,7 @@ const grid = document.querySelector(".grid") // griglia le cui caselle dipendera
 let gridGenerated = false; // mi dice se la grid è stata generata gia o meno
 let choise = document.getElementById("select"); // variabile legata al menu a tendina della difficolta
 const numberBombs = 16;
-let arrayBombs = 0;
+let bombs=[];
 
 
 
@@ -58,7 +58,7 @@ btn.addEventListener('click', function() {
     const mode = choise.value; // modalita scelta dal menu a tendina
     const numberOfSquare = regulationGrid(mode); //richiamo funzione per dare il numero di elementi della grid
     const lastNumberGrid = generateGrid(numberOfSquare); 
-    let bombs = generateBomb (16, regulationGrid(mode)); // genero array di bombe
+    bombs = generateBomb (16, regulationGrid(mode)); // genero array di bombe
     console.log(bombs);
 });
 
@@ -72,10 +72,10 @@ btn.addEventListener('click', function() {
  // @param {number} leftCells 
  // @returns  {number}
  ///
-function maxClick (generateBombs, leftCells){
-    let clickMax = generateBomb() - choise.value ;
-    return clickMax;
-}
+// function maxClick (generateBombs, leftCells){
+//     let clickMax = generateBomb() - choise.value ;
+//     return clickMax;
+// }
 
 
 /**
@@ -109,7 +109,7 @@ function generateBomb (numbersQuantity, maxNumber){
 function getRndNumber (min = 1, max = 100){
     return Math.floor(Math.random() * (max - min) ) + min;    
 }
-console.log(getRndNumber(1, 49));
+// console.log(getRndNumber(1, 49));
 
 
 /**
@@ -150,14 +150,17 @@ function regulationGrid (modeUser) {
 
 // Modifico la funzione in modo da tener conto della cella cliccata
 function itemClick() {    
-    // arrayBombs = generateBomb(16, regulationGrid(choise.value));
-    console.log(arrayBombs);
     this.classList.add("click");    
-    clickedNumber = (this.textContent); 
-    console.log("HAI CLICCATO" , this.innerText);  
-    if (this.innerText === arrayBombs){
-        console.log("hai perso");
-    } 
+    clickedNumber = parseInt(this.innerText); 
+    console.log(clickedNumber, typeof clickedNumber);
+    console.log("HAI CLICCATO" , this.innerText); 
+    console.log(bombs);
+    if (bombs.includes(clickedNumber)){
+        console.log("hai perso", clickedNumber);
+        
+    } else {
+        console.log("puoi continuare");
+    }
     return clickedNumber;    
 }
 
