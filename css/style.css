@@ -81,3 +81,9 @@ select {
 .bomb {
     background-color: red;
 }
+
+.index {
+    position: relative;
+    z-index: 99;
+    text-align: center;
+}

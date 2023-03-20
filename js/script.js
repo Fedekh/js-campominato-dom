@@ -141,7 +141,7 @@ function regulationGrid(modeUser) {
 
 function gameOverAlert() { //funzione che allerta che hai perso
     return alert("Hai perso!");
-  }
+}
 
 // Modifico la funzione in modo da tener conto della cella cliccata
 function itemClick() {
@@ -149,15 +149,14 @@ function itemClick() {
     clickedNumber = parseInt(this.innerText); //mostro l'intero equivalente a cio che è scritto in cella
     console.log(clickedNumber, typeof clickedNumber);
     console.log("HAI CLICCATO", this.innerText);
-    
+
     if (bombs.includes(clickedNumber)) {
         console.log("HAI PERSO", clickedNumber);
         this.classList.add("bomb");
-        gameOverAlert();// funzione che esplica un alert in caso di sconfitta
-        // this.innerHTML = ""; // reset game
-        const items = document.querySelectorAll(".item");
-        items.removeEventListener("click", itemClick);      
-       
+        gameOverAlert();
+        disableCells();
+        this.innerHTML = "";
+
     } else {
         console.log("puoi continuare");
         return clickedNumber;
@@ -165,7 +164,13 @@ function itemClick() {
 
 }
 
-
+// QUESTA FUNZIONE SERVE PER FAR SI CHE TUTTE LE CELLE VENGANO DISABILITATE DOPO AVER TROVATO UNA BOMBA
+function disableCells() {
+    const cells = document.querySelectorAll(".grid-elem"); //ARRAY CONTENENTE TUTTI I DIV CON CLASSE GRID-ELEM OVVERO 100/81/49
+    for (let i = 0; i < cells.length; i++) {
+        cells[i].removeEventListener("click", itemClick);
+    }
+}
 
 
 
