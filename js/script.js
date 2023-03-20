@@ -41,7 +41,6 @@
 //                 []  FINE GIOCO
 
 
-
 // DICHIARAZIONI
 //  definisco in primis alcune variabili che mi serviranno con scope globale 
 const btn = document.querySelector(".btn"); // questo è il buttone che mi indicherà poi la difficoltà
@@ -49,7 +48,7 @@ const grid = document.querySelector(".grid") // griglia le cui caselle dipendera
 let gridGenerated = false; // mi dice se la grid è stata generata gia o meno
 let choise = document.getElementById("select"); // variabile legata al menu a tendina della difficolta
 const numberBombs = 16;
-// console.log(choise.value);
+let clickedNumber = 0;
 
 
 // ! FUNZIONI
@@ -74,10 +73,7 @@ function generateBomb (numbersQuantity, maxNumber){
     return number;
 }
 
-// TEST
-getRndNumber(1, 100);
-generateBomb (16, 100);
-console.log(generateBomb);
+
 
 /**
  * Description creo una funzione tale per cui dato un preciso range mi genera un numero intero randomico per far inserire casualmente le 16 bombe all interno della griglia
@@ -129,10 +125,9 @@ function regulationGrid (modeUser) {
 // Modifico la funzione in modo da tener conto della cella cliccata
 function itemClick() {
     this.classList.add("click");    
-    // const clickedNumber = parseInt(this.textContent); 
-    // console.log("HAI CLICCATO" , this.innerText);   
-    // console.log(clickedNumber, typeof clickedNumber);
-    // return clickedNumber;    
+    clickedNumber = parseInt(this.textContent); 
+    console.log("HAI CLICCATO" , this.innerText);   
+    return clickedNumber;    
 }
 
 
@@ -142,13 +137,10 @@ btn.addEventListener('click', function() {
     const numberOfSquare = regulationGrid(mode); //richiamo funzione per dare il numero di elementi della grid
     const lastNumberGrid = generateGrid(numberOfSquare); 
     grid.append(lastNumberGrid);
-    // generateBomb (1, mode);
-    console.log(generateBomb);
-    // getRndNumber (1, 16);
-    console.log( getRndNumber);
-    // generateBomb (16, mode);
-    console.log(generateBomb);
-         
+    let bomb = generateBomb (1, mode);
+    let rndNumber = getRndNumber (1, mode);
+    let clickNumber = clickedNumber;
+    console.log(bomb, rndNumber, clickNumber);
 });
 
 
