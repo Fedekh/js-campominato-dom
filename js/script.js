@@ -143,6 +143,16 @@ function gameOverAlert() { //funzione che allerta che hai perso
     return alert("Hai perso!");
 }
 
+
+function revealBombs (){ //funzione per far rivelare tutte le bombe al momento della sconfitta
+    const allBombs = document.querySelectorAll(".grid-elem");
+    for (let i = 0; i < allBombs.length; i++) {
+        if (bombs.includes(parseInt(allBombs[i].innerText))) { //controllo se il valore della cella corrente è presente nell'array bombs
+            allBombs[i].classList.add("bomb");
+        }
+    }
+}
+
 // Modifico la funzione in modo da tener conto della cella cliccata
 function itemClick() {
     this.classList.add("click"); //aggiungo la classe click ovvvero sfondo blu
@@ -153,10 +163,15 @@ function itemClick() {
     if (bombs.includes(clickedNumber)) {
         console.log("HAI PERSO", clickedNumber);
         this.classList.add("bomb");
-        gameOverAlert();
-        disableCells();
+        gameOverAlert(); //richiamo funzione che allerta che hai perso
+        revealBombs(); //richiamo funzione che mostra tutte le bombe di rosso
+        disableCells(); // richiamo funzione che disabilita la griglia per non farti proseguire
         this.innerHTML = "";
-
+        for (let = k ; k < bombs.length ; k++){
+            const bombReveal = bombs[k];  
+        }
+        bombReveal.classList.add("bomb");
+        
     } else {
         console.log("puoi continuare");
         return clickedNumber;
@@ -168,7 +183,7 @@ function itemClick() {
 function disableCells() {
     const cells = document.querySelectorAll(".grid-elem"); //ARRAY CONTENENTE TUTTI I DIV CON CLASSE GRID-ELEM OVVERO 100/81/49
     for (let i = 0; i < cells.length; i++) {
-        cells[i].removeEventListener("click", itemClick);
+        cells[i].removeEventListener("click", itemClick); // rimuovo l'evento del click a tutte le celle
     }
 }
 
