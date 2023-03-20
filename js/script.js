@@ -144,7 +144,7 @@ function gameOverAlert() { //funzione che allerta che hai perso
 }
 
 
-function revealBombs (){ //funzione per far rivelare tutte le bombe al momento della sconfitta
+function revealBombs() { //funzione per far rivelare tutte le bombe al momento della sconfitta
     const allBombs = document.querySelectorAll(".grid-elem");
     for (let i = 0; i < allBombs.length; i++) {
         if (bombs.includes(parseInt(allBombs[i].innerText))) { //controllo se il valore della cella corrente è presente nell'array bombs
@@ -167,11 +167,11 @@ function itemClick() {
         revealBombs(); //richiamo funzione che mostra tutte le bombe di rosso
         disableCells(); // richiamo funzione che disabilita la griglia per non farti proseguire
         this.innerHTML = "";
-        for (let = k ; k < bombs.length ; k++){
-            const bombReveal = bombs[k];  
+        for (let k = 0; k < bombs.length; k++) {
+            const bombsReveal = bombs[k];  //creo un array contenente tutte le celle bombe per dar loro la classe bomb
         }
-        bombReveal.classList.add("bomb");
-        
+        bombsReveal.classList.add("bomb");
+
     } else {
         console.log("puoi continuare");
         return clickedNumber;
