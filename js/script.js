@@ -43,8 +43,6 @@
 
 
 
-    v
-
 // DICHIARAZIONI
 //  definisco in primis alcune variabili che mi serviranno con scope globale 
 const btn = document.querySelector(".btn"); // questo è il buttone che mi indicherà poi la difficoltà
@@ -66,10 +64,27 @@ console.log(choise.value);
  */
 function generateBomb (numbersQuantity, maxNumber){
     // creare array vuoto
+    const number = [];
     // Finche la lunghezza array è < di numbersQuantity
-    //     genero un numero random nel Range
-    //     se il numero non è gia presente nell array lo Push , altrimenti continuo a generare
+    while (number.length < numbersQuantity){
+        //     genero un numero random nel Range, creando all interno di questa funzione , un ulteriore funzione, dando gli estremi del range
+        const rndNumber = getRndNumber (1 , maxNumber);
+        //     se il numero non è gia presente nell array lo Push , altrimenti continuo a generare
+            if (!number.includes (rndNumber)){
+                number.push (rndNumber);
+            }
+    }
+}
 
+
+/**
+ * Description creo una funzione tale per cui dato un preciso range mi genera un numero intero randomico
+ * @param {number} min
+ * @param {number} max
+ * @returns {number} il numero randomico mi ritorna
+ */
+function getRndNumber (min,max){
+    return Math.floor(math.random() * (max - min +1)) + min ;
 }
 
 
@@ -79,7 +94,7 @@ function generateBomb (numbersQuantity, maxNumber){
  * @void
  */
 function generateGrid(numberOfSquares) {
-    let currentElem ="";
+    let currentElem = "";
     let lastClass = choise.value;
     console.log(lastClass);
     grid.innerHTML = "";
@@ -97,22 +112,24 @@ function generateGrid(numberOfSquares) {
 function regulationGrid (modeUser) {
     let numberSquare = 0;
     if (modeUser === "easy"){
-        numberOfSquare = 100 ;
+        numberSquare = 100 ;
 
     } else if (modeUser === "medium") {
-        numberOfSquare = 81 ;
+        numberSquare = 81 ;
     }else if (modeUser === "hard"){
-        numberOfSquare = 49 ;
+        numberSquare = 49 ;
     }
 
-    return numberOfSquare;
+    return numberSquare;
 }
-
 
 function itemClick() {
-    console.log(this.innerText);    
     this.classList.add("click");    
+    console.log("HAI CLICCATO" , this.innerText);   
+    const clickedNumber = number(this.textContent); 
+    console.log(clickedNumber);
 }
+
 
 // #####################################################################################################################
 
@@ -129,7 +146,8 @@ btn.addEventListener('click', function() {
     console.log(numberOfSquare);
     const lastNumberGrid = generateGrid(numberOfSquare); 
     grid.append(lastNumberGrid);  
-    console.log(lastNumberGrid);     
+    console.log(lastNumberGrid); 
+        
 });
 
 
