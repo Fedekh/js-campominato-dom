@@ -48,42 +48,68 @@ const grid = document.querySelector(".grid") // griglia le cui caselle dipendera
 let gridGenerated = false; // mi dice se la grid è stata generata gia o meno
 let choise = document.getElementById("select"); // variabile legata al menu a tendina della difficolta
 const numberBombs = 16;
-let clickedNumber = 0;
+let arrayBombs = 0;
 
 
+
+// CLICK EVENTO BOTTONE PLAY
+
+btn.addEventListener('click', function() {
+    const mode = choise.value; // modalita scelta dal menu a tendina
+    const numberOfSquare = regulationGrid(mode); //richiamo funzione per dare il numero di elementi della grid
+    const lastNumberGrid = generateGrid(numberOfSquare); 
+    let bombs = generateBomb (16, regulationGrid(mode)); // genero array di bombe
+    console.log(bombs);
+});
+
+
+// **#############################################################################
 // ! FUNZIONI
+
+//
+ /// Funzione che mi genera le celle cliccabili massime senza incorrere a bombe
+ // @param {number} generateBombs 
+ // @param {number} leftCells 
+ // @returns  {number}
+ ///
+function maxClick (generateBombs, leftCells){
+    let clickMax = generateBomb() - choise.value ;
+    return clickMax;
+}
+
+
 /**
  * Description Funzione che genera array di numberQuantity numeri random nel range da 1 a maxNumber(difficola gioco), i numeri sono unici
  * @param {number} numbersQuantity
  * @param {number} maxNumber (puo essere o 100 o 81 o 49)
- * @returns {array}
+ * @returns {array} di 16 numeri casuali
  */
 function generateBomb (numbersQuantity, maxNumber){
     // creare array vuoto
-    const number = [];
+    const numbers = [];
     // Finche la lunghezza array è < di numbersQuantity (16)
-    while (number.length < numbersQuantity){
+    while (numbers.length < numbersQuantity){
         //     genero un numero random nel Range (100-81-49), creando all interno di questa funzione , un ulteriore funzione, dando gli estremi del range
         const rndNumber = getRndNumber (1 , maxNumber);
         //     se il numero non è gia presente nell array lo Push , altrimenti continuo a generare
-            if (!number.includes (rndNumber)){
-                number.push (rndNumber);
+            if (!numbers.includes (rndNumber)){
+                numbers.push (rndNumber);
             }
     }
-    return number;
+    return numbers;
 }
 
 
-
 /**
- * Description creo una funzione tale per cui dato un preciso range mi genera un numero intero randomico per far inserire casualmente le 16 bombe all interno della griglia
+ * Description creo una funzione tale per cui dato un preciso range(dipendente dalla modalita easy normal hard) mi genera un numero intero randomico per far inserire casualmente le 16 bombe all interno della griglia
  * @param {number} min
  * @param {number} max
  * @returns {number} il numero randomico mi ritorna
  */
-function getRndNumber (min,max){
-    return Math.floor(Math.random() * (max - min) ) + min;
+function getRndNumber (min = 1, max = 100){
+    return Math.floor(Math.random() * (max - min) ) + min;    
 }
+console.log(getRndNumber(1, 49));
 
 
 /**
@@ -100,10 +126,10 @@ function generateGrid(numberOfSquares) {
         currentElem = document.createElement("div"); //creo un elemento nel dom
         currentElem.classList.add("grid-elem", lastClass); //aggiungo la classe stilizzata in css all'elemento appena creato
         currentElem.innerText = k; // imposto il test (o numero) che dovrà poi comparire nella casella nel DOM
-        currentElem.addEventListener("click", itemClick); // dopo la creazione griglia posso aggiungere la chiamata alla funzione tale per cui si colora lo sfondo di blu
+        currentElem.addEventListener("click", itemClick);// dopo la creazione griglia posso aggiungere la chiamata alla funzione tale per cui si colora lo sfondo di blu
         grid.appendChild(currentElem); //aggiungo l'elemento alla griglia       
     }
-     return currentElem;
+    
 }
 
 
@@ -114,7 +140,7 @@ function regulationGrid (modeUser) {
         numberSquare = 100 ;
     } else if (modeUser === "medium") {
         numberSquare = 81 ;
-    }else if (modeUser === "hard"){
+    } else if (modeUser === "hard"){
         numberSquare = 49 ;
     }
 
@@ -123,25 +149,20 @@ function regulationGrid (modeUser) {
 
 
 // Modifico la funzione in modo da tener conto della cella cliccata
-function itemClick() {
+function itemClick() {    
+    // arrayBombs = generateBomb(16, regulationGrid(choise.value));
+    console.log(arrayBombs);
     this.classList.add("click");    
-    clickedNumber = parseInt(this.textContent); 
-    console.log("HAI CLICCATO" , this.innerText);   
+    clickedNumber = (this.textContent); 
+    console.log("HAI CLICCATO" , this.innerText);  
+    if (this.innerText === arrayBombs){
+        console.log("hai perso");
+    } 
     return clickedNumber;    
 }
 
 
 
-btn.addEventListener('click', function() {
-    const mode = choise.value; // modalita scelta dal menu a tendina
-    const numberOfSquare = regulationGrid(mode); //richiamo funzione per dare il numero di elementi della grid
-    const lastNumberGrid = generateGrid(numberOfSquare); 
-    grid.append(lastNumberGrid);
-    let bomb = generateBomb (1, mode);
-    let rndNumber = getRndNumber (1, mode);
-    let clickNumber = clickedNumber;
-    console.log(bomb, rndNumber, clickNumber);
-});
 
 
 
